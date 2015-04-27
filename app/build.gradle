@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+apply plugin: 'spoon'
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.stanfy.spoon:spoon-gradle-plugin:0.14.1'
+    }
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.test.spoondemo"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testApplicationId "com.test.spoondemo.test"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+}
+
+spoon {
+    debug = true
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.1.6'
+    androidTestCompile 'com.android.support.test:runner:0.2'
+    androidTestCompile ('com.android.support.test:rules:+') {
+        exclude module: 'support-annotations'
+    }
+    androidTestCompile ('com.android.support.test.espresso:espresso-core:2.1') {
+        exclude module: 'support-annotations'
+    }
+}
